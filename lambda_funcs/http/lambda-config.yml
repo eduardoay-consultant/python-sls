@@ -1,0 +1,13 @@
+function:
+  api:
+    handler: lambda_funcs/http/api.handler
+    events:
+      - http:
+          path: /
+          method: ANY
+          cors: ${file(config/cors.yml):${self:provider.stage}.cors}
+
+      - http:
+          path: /{proxy+}
+          method: ANY
+          cors: ${file(config/cors.yml):${self:provider.stage}.cors}

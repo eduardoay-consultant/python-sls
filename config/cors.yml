@@ -1,0 +1,33 @@
+.cors: &default
+  origin: '*'
+  allowCredentials: true
+  headers:
+    - Origin
+    - Content-Type
+    - Accept
+    - Authorization
+    - Startlower
+    - Text
+    - Access-Control-Allow-Headers
+    - Access-Control-Allow-Origin
+    - Access-Control-Allow-Methods
+    - Access-Control-Allow-Credentials
+    - X-Amz-Date
+    - X-Amz-Security-Token
+    - X-Amz-User-Agent
+    - X-User-Id
+    - X-Trace-Id
+    - X-Language
+    - X-Transaction-Id
+    - X-Api-Key
+    - X-Api-Version
+    - X-Refresh-Token
+    - X-Forwarded-For
+
+dev:
+  cors:
+    <<: *default
+
+prod:
+  cors:
+    <<: *default

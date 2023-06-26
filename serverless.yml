@@ -1,0 +1,59 @@
+service: service-name
+
+configValidationMode: error
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: python3.9
+  timeout: 30
+  stage: ${opt:stage, "dev"}
+  region: ${opt:region, "us-east-1"}
+  environment: ${file(config/environment.yml):${param:stage,self:provider.stage}.environment}
+  iam: ${file(config/iam.yml):${param:stage,self:provider.stage}.roles}
+  # vpc: ${file(config/vpc.yml):${param:stage,self:provider.stage}.vpc}
+
+  # Enable X-Ray tracing
+  #
+  tracing:
+    apiGateway: true
+    lambda: true
+
+package:
+  individually: true
+  patterns:
+    - "requirements.txt"
+    - "package.json"
+    - "package-lock.json"
+    - ".serverless/**"
+    - ".venv/**"
+    - "lambda/**"
+    - "src/**"
+    - "!node_modules/**"
+    - "!serverless/**"
+
+custom:
+  customDomain: ${file(config/domain.yml):${self:provider.stage}.customDomain}
+  # warmup: ${file(config/concurrency.yml):${param:stage,self:provider.stage}.warmup}
+  lambdaInsights:
+    defaultLambdaInsights: true
+  prune:
+    automatic: true
+    number: 5
+  pythonRequirements:
+    dockerizePip: non-linux
+    layer:
+      name: common-layer
+      description: Common requirements Layer
+
+functions:
+  - ${file(lambda_funcs/http/lambda-config.yml):function}
+
+plugins:
+  - serverless-domain-manager
+  - serverless-plugin-lambda-insights
+  - serverless-plugin-s3-remover
+  - serverless-prune-plugin
+  - serverless-python-requirements
+  - serverless-offline

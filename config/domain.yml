@@ -1,0 +1,18 @@
+.config: &default
+  basePath: ''
+  stage: ${self:provider.stage}
+  securityPolicy: tls_1_2
+  createRoute53Record: true
+  endpointType: 'edge'
+
+dev:
+  customDomain:
+    <<: *default
+    domainName: 'api.dev.domain.com'
+    certificateName: '*.dev.domain.com'
+
+prod:
+  customDomain:
+    <<: *default
+    domainName: 'api.domain.com'
+    certificateName: '*.domain.com'

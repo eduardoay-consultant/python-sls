@@ -1,0 +1,21 @@
+.envs: &default
+  APP_NAME: service-name
+  STAGE: ${self:provider.stage}
+
+  SENTRY_DSN: ''
+
+  # REDIS
+  # REDIS_ADDR: ${ssm:/service/cache/${param:stage,self:provider.stage}/HOST}
+  # REDIS_DB: ${ssm:/service/cache/${param:stage,self:provider.stage}/DB}
+
+dev:
+  environment:
+    <<: *default
+    DEBUG: true
+    SENTRY_DSN: ''
+
+
+prod:
+  environment:
+    <<: *default
+    DEBUG: false

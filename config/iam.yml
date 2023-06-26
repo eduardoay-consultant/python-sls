@@ -1,0 +1,27 @@
+.iam: &service_roles
+  # deploymentRole: ${ssm:/service/roles/${param:stage,self:provider.stage}/deployment-role}
+
+  # Service level permissions
+  #
+  role:
+    statements:
+      - Effect: Allow
+        Action: sqs:*
+        Resource: "*"
+      - Effect: Allow
+        Action: secretsmanager:*
+        Resource: "*"
+      - Effect: Allow
+        Action: qldb:*
+        Resource: "*"
+      - Effect: Allow
+        Action: dynamo:*
+        Resource: "*"
+
+dev:
+  roles:
+    <<: *service_roles
+
+prod:
+  roles:
+    <<: *service_roles

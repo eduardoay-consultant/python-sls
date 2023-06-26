@@ -1,0 +1,17 @@
+dev:
+  vpc:
+    securityGroupIds:
+      - sg-05382e2f3d01d8912
+    subnetIds:
+      - subnet-003cfa62235a9e693
+      - subnet-0b0a64d3f50df2807
+      - subnet-044dbbbc1754e5491
+
+prod:
+  vpc:
+    securityGroupIds:
+      - sg-020c1b0af98c7bef0
+    subnetIds:
+      - subnet-0115ef404139bbf98
+      - subnet-0c24f921ee2a5ade5
+      - subnet-0dd8935c0a4560a05
